@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Virtual_Pet_Care_API.Entities;
 
 namespace Virtual_Pet_Care_API.Controllers
 {
@@ -30,7 +31,7 @@ namespace Virtual_Pet_Care_API.Controllers
 			}
 		}
 
-		[HttpGet("[petId}")]
+		[HttpGet("{petId}")]
 		public IActionResult GetById(int petId)
 		{
 			try

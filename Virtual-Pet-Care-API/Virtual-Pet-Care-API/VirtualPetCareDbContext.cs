@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Virtual_Pet_Care_API.Entities;
 
 namespace Virtual_Pet_Care_API
 {

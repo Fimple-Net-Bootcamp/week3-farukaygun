@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Virtual_Pet_Care_API.Entities;
 
 namespace Virtual_Pet_Care_API.Controllers
 {
-	[ApiController]
+    [ApiController]
 	[Route("api/v1/healthstatus")]
 	public class HealthStatusController : ControllerBase
 	{
