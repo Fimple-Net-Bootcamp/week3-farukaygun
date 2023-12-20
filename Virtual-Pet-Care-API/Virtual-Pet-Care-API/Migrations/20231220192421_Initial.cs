@@ -6,11 +6,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Virtual_Pet_Care_API.Migrations
 {
     /// <inheritdoc />
-    public partial class initialize : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Food",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Type = table.Column<string>(type: "TEXT", nullable: false),
+                    Brand = table.Column<string>(type: "TEXT", nullable: false),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    Calories = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Food", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
@@ -37,8 +53,7 @@ namespace Virtual_Pet_Care_API.Migrations
                     UserId = table.Column<int>(type: "INTEGER", nullable: false),
                     Species = table.Column<string>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Age = table.Column<int>(type: "INTEGER", nullable: false),
-                    Color = table.Column<string>(type: "TEXT", nullable: false)
+                    Age = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,7 +67,7 @@ namespace Virtual_Pet_Care_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "activities",
+                name: "Activity",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -64,9 +79,9 @@ namespace Virtual_Pet_Care_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_activities", x => x.Id);
+                    table.PrimaryKey("PK_Activity", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_activities_Pet_PetId",
+                        name: "FK_Activity_Pet_PetId",
                         column: x => x.PetId,
                         principalTable: "Pet",
                         principalColumn: "Id",
@@ -96,8 +111,8 @@ namespace Virtual_Pet_Care_API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_activities_PetId",
-                table: "activities",
+                name: "IX_Activity_PetId",
+                table: "Activity",
                 column: "PetId");
 
             migrationBuilder.CreateIndex(
@@ -115,7 +130,10 @@ namespace Virtual_Pet_Care_API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "activities");
+                name: "Activity");
+
+            migrationBuilder.DropTable(
+                name: "Food");
 
             migrationBuilder.DropTable(
                 name: "HealthStatus");

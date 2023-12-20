@@ -3,7 +3,7 @@ using Virtual_Pet_Care_API.Entities;
 
 namespace Virtual_Pet_Care_API.Controllers
 {
-    [ApiController]
+	[ApiController]
 	[Route("api/v1/pets")]
 	public class PetController : ControllerBase
 	{
@@ -19,7 +19,7 @@ namespace Virtual_Pet_Care_API.Controllers
 		{
 			try
 			{
-				await context.Pets.AddAsync(pet);
+				await context.Pet.AddAsync(pet);
 				await context.SaveChangesAsync();
 
 				return CreatedAtAction(nameof(GetById), new { id = pet.Id }, pet);
@@ -36,7 +36,7 @@ namespace Virtual_Pet_Care_API.Controllers
 		{
 			try
 			{
-				var pets = context.Pets.ToList();
+				var pets = context.Pet.ToList();
 
 				if (pets is null)
 					return NotFound();
@@ -55,11 +55,11 @@ namespace Virtual_Pet_Care_API.Controllers
 		{
 			try
 			{
-				var pet = context.Pets.Where(pet => pet.Id == id).FirstOrDefault();
+				var pet = context.Pet.Where(pet => pet.Id == id).FirstOrDefault();
 
 				if (pet is null)
 					return NotFound();
-				
+
 				return Ok(pet);
 			}
 			catch (Exception e)
@@ -75,7 +75,7 @@ namespace Virtual_Pet_Care_API.Controllers
 		{
 			try
 			{
-				var petToUpdate = context.Pets.Where(pet => pet.Id == id).FirstOrDefault();
+				var petToUpdate = context.Pet.Where(pet => pet.Id == id).FirstOrDefault();
 
 				if (petToUpdate is null)
 					return NotFound();
@@ -83,7 +83,6 @@ namespace Virtual_Pet_Care_API.Controllers
 				petToUpdate.Name = pet.Name;
 				petToUpdate.Age = pet.Age;
 				petToUpdate.Species = pet.Species;
-				petToUpdate.Color = pet.Color;
 
 				await context.SaveChangesAsync();
 

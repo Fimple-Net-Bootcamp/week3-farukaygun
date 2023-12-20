@@ -18,7 +18,7 @@ namespace Virtual_Pet_Care_API.Controllers
 		{
 			try
 			{
-				var foods = context.Foods.ToList();
+				var foods = context.Food.ToList();
 
 				if (foods is null)
 					return NotFound();

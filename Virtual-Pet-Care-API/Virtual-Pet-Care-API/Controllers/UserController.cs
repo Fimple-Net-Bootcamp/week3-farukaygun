@@ -3,7 +3,7 @@ using Virtual_Pet_Care_API.Entities;
 
 namespace Virtual_Pet_Care_API.Controllers
 {
-    [ApiController]
+	[ApiController]
 	[Route("api/v1/users")]
 	public class UserController : ControllerBase
 	{
@@ -20,7 +20,7 @@ namespace Virtual_Pet_Care_API.Controllers
 		{
 			try
 			{
-				await context.Users.AddAsync(user);
+				await context.User.AddAsync(user);
 				await context.SaveChangesAsync();
 
 				return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
@@ -37,11 +37,11 @@ namespace Virtual_Pet_Care_API.Controllers
 		{
 			try
 			{
-				var user = context.Users.Where(user => user.Id == id).FirstOrDefault();
+				var user = context.User.Where(user => user.Id == id).FirstOrDefault();
 
 				if (user is null)
 					return NotFound();
-				
+
 				return Ok(user);
 			}
 			catch (Exception e)

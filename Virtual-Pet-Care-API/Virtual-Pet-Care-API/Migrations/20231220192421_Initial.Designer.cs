@@ -4,14 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Virtual_Pet_Care_API;
 
 #nullable disable
 
 namespace Virtual_Pet_Care_API.Migrations
 {
     [DbContext(typeof(VirtualPetCareDbContext))]
-    [Migration("20231215223805_initialize")]
-    partial class initialize
+    [Migration("20231220192421_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,7 +20,7 @@ namespace Virtual_Pet_Care_API.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.14");
 
-            modelBuilder.Entity("Virtual_Pet_Care_API.Activity", b =>
+            modelBuilder.Entity("Virtual_Pet_Care_API.Entities.Activity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,10 +43,35 @@ namespace Virtual_Pet_Care_API.Migrations
 
                     b.HasIndex("PetId");
 
-                    b.ToTable("activities");
+                    b.ToTable("Activity");
                 });
 
-            modelBuilder.Entity("Virtual_Pet_Care_API.HealthStatus", b =>
+            modelBuilder.Entity("Virtual_Pet_Care_API.Entities.Food", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Brand")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Calories")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Food");
+                });
+
+            modelBuilder.Entity("Virtual_Pet_Care_API.Entities.HealthStatus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -71,7 +97,7 @@ namespace Virtual_Pet_Care_API.Migrations
                     b.ToTable("HealthStatus");
                 });
 
-            modelBuilder.Entity("Virtual_Pet_Care_API.Pet", b =>
+            modelBuilder.Entity("Virtual_Pet_Care_API.Entities.Pet", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -79,10 +105,6 @@ namespace Virtual_Pet_Care_API.Migrations
 
                     b.Property<int>("Age")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -102,7 +124,7 @@ namespace Virtual_Pet_Care_API.Migrations
                     b.ToTable("Pet");
                 });
 
-            modelBuilder.Entity("Virtual_Pet_Care_API.User", b =>
+            modelBuilder.Entity("Virtual_Pet_Care_API.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -132,10 +154,10 @@ namespace Virtual_Pet_Care_API.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("Virtual_Pet_Care_API.Activity", b =>
+            modelBuilder.Entity("Virtual_Pet_Care_API.Entities.Activity", b =>
                 {
-                    b.HasOne("Virtual_Pet_Care_API.Pet", "Pet")
-                        .WithMany("Activities")
+                    b.HasOne("Virtual_Pet_Care_API.Entities.Pet", "Pet")
+                        .WithMany()
                         .HasForeignKey("PetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -143,10 +165,10 @@ namespace Virtual_Pet_Care_API.Migrations
                     b.Navigation("Pet");
                 });
 
-            modelBuilder.Entity("Virtual_Pet_Care_API.HealthStatus", b =>
+            modelBuilder.Entity("Virtual_Pet_Care_API.Entities.HealthStatus", b =>
                 {
-                    b.HasOne("Virtual_Pet_Care_API.Pet", "Pet")
-                        .WithMany("HealthStatusList")
+                    b.HasOne("Virtual_Pet_Care_API.Entities.Pet", "Pet")
+                        .WithMany()
                         .HasForeignKey("PetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -154,25 +176,16 @@ namespace Virtual_Pet_Care_API.Migrations
                     b.Navigation("Pet");
                 });
 
-            modelBuilder.Entity("Virtual_Pet_Care_API.Pet", b =>
+            modelBuilder.Entity("Virtual_Pet_Care_API.Entities.Pet", b =>
                 {
-                    b.HasOne("Virtual_Pet_Care_API.User", "User")
+                    b.HasOne("Virtual_Pet_Care_API.Entities.User", null)
                         .WithMany("Pets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Virtual_Pet_Care_API.Pet", b =>
-                {
-                    b.Navigation("Activities");
-
-                    b.Navigation("HealthStatusList");
-                });
-
-            modelBuilder.Entity("Virtual_Pet_Care_API.User", b =>
+            modelBuilder.Entity("Virtual_Pet_Care_API.Entities.User", b =>
                 {
                     b.Navigation("Pets");
                 });

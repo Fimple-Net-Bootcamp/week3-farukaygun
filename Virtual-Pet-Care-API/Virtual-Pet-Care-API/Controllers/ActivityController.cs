@@ -19,7 +19,7 @@ namespace Virtual_Pet_Care_API.Controllers
 		{
 			try
 			{
-				await context.Activities.AddAsync(activity);
+				await context.Activity.AddAsync(activity);
 				await context.SaveChangesAsync();
 
 				return CreatedAtAction(nameof(GetById), new { id = activity.Id }, activity);
@@ -36,7 +36,7 @@ namespace Virtual_Pet_Care_API.Controllers
 		{
 			try
 			{
-				var activity = context.Activities.Where(activity => activity.PetId == petId).FirstOrDefault();
+				var activity = context.Activity.Where(activity => activity.PetId == petId).FirstOrDefault();
 
 				if (activity is null)
 					return NotFound();
